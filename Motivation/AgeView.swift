@@ -11,7 +11,7 @@ import ScreenSaver
 
 class AgeView: ScreenSaverView {
 
-    private lazy var sheetController: ConfigureSheetController = ConfigureSheetController()
+    private var sheetController: ConfigureSheetController?
 
     var isPreviewBug: Bool = false
 
@@ -45,7 +45,10 @@ class AgeView: ScreenSaverView {
     }
 
     override var configureSheet: NSWindow? {
-        return sheetController.window
+        // Create a fresh controller each time; a sheet that was already dismissed is not reliably re-presentable.
+        let controller = ConfigureSheetController()
+        sheetController = controller
+        return controller.window
     }
 
 
