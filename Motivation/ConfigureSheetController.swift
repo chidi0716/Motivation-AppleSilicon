@@ -89,7 +89,12 @@ class ConfigureSheetController: NSObject {
 
     @IBAction func close(_ sender: NSButton) {
         if let window = window {
-            window.close()
+            // The window is presented as a sheet; close() does not dismiss it on recent macOS.
+            if let parent = window.sheetParent {
+                parent.endSheet(window)
+            } else {
+                window.close()
+            }
         }
     }
 
